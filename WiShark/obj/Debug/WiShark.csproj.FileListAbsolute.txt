@@ -1,0 +1,14 @@
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\WiShark.exe.config
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\WiShark.exe
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\WiShark.pdb
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.csprojResolveAssemblyReference.cache
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.Form1.resources
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.Properties.Resources.resources
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.csproj.GenerateResource.Cache
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.exe
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.pdb
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\PacketDotNet.dll
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\SharpPcap.dll
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\PacketDotNet.xml
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\SharpPcap.xml
+c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.Form2.resources
