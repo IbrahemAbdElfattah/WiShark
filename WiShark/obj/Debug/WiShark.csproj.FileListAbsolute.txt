@@ -12,3 +12,31 @@ c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\Sha
 c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\PacketDotNet.xml
 c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\bin\Debug\SharpPcap.xml
 c:\users\iaa\documents\visual studio 2012\Projects\WiShark\WiShark\obj\Debug\WiShark.Form2.resources
+E:\Old\IAA\WiShark\WiShark\bin\Debug\WiShark.exe.config
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.exe
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.pdb
+E:\Old\IAA\WiShark\WiShark\obj\Debug\ResolveAssemblyReference.cache
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.Form1.resources
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.Form2.resources
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.Properties.Resources.resources
+E:\Old\IAA\WiShark\WiShark\obj\Debug\WiShark.csproj.GenerateResource.Cache
+E:\Old\IAA\WiShark\WiShark\bin\Debug\WiShark.exe
+E:\Old\IAA\WiShark\WiShark\bin\Debug\PacketDotNet.dll
+E:\Old\IAA\WiShark\WiShark\bin\Debug\SharpPcap.dll
+E:\Old\IAA\WiShark\WiShark\bin\Debug\SharpPcap.xml
+E:\Old\IAA\WiShark\WiShark\bin\Debug\PacketDotNet.xml
+E:\Old\IAA\WiShark\WiShark\bin\Debug\WiShark.pdb
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\WiShark.exe.config
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.exe
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.pdb
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\WiShark.exe
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\WiShark.pdb
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\PacketDotNet.dll
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\SharpPcap.dll
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\PacketDotNet.xml
+E:\Sharing\New folder\WiShark\WiShark\bin\Debug\SharpPcap.xml
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.csprojResolveAssemblyReference.cache
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.Form1.resources
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.Form2.resources
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.Properties.Resources.resources
+E:\Sharing\New folder\WiShark\WiShark\obj\Debug\WiShark.csproj.GenerateResource.Cache
