@@ -159,7 +159,9 @@ namespace WiShark
 
                 listView1.Items.Add(packetitem);
             }
-            treeCommponents[ind].Add(Tim);
+            List<string> trees = new List<string>();
+
+            treeCommponents.Add(trees);
            ind++;
         }
 
@@ -213,6 +215,8 @@ namespace WiShark
             textBox1.Text="";
             
         }
+
+       
 
         
 
