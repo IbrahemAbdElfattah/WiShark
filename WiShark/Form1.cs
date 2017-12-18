@@ -53,17 +53,24 @@ namespace WiShark
         //CheckedListBox handler
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (checkedListBox1.SelectedIndex == -1)
+            {
+                button1.Enabled = false;
+                return;
+            }
             int toUncheck = lastCheck;
             if (toUncheck != -1)
                 checkedListBox1.SetItemChecked(toUncheck, false);
             lastCheck = checkedListBox1.SelectedIndex;
             checkedListBox1.SetItemChecked(lastCheck, true);
 
-            Globals.index = checkedListBox1.SelectedIndex; 
+            Globals.index = checkedListBox1.SelectedIndex;
             if (checkedListBox1.SelectedItems.Count != 0)
             {
                 button1.Enabled = true;
             }
+           
+        
             
             
          }
