@@ -20,6 +20,7 @@ namespace WiShark
     {
         public static class Globals
         {
+            //make devices global
             public static CaptureDeviceList devices = CaptureDeviceList.Instance;
             public static int index = 0;
         }
@@ -29,7 +30,7 @@ namespace WiShark
             button1.Enabled = false;
             GetDevices();
         }
-
+        //get devices funcion
         void GetDevices() {
             int i = 0;
 
@@ -49,6 +50,7 @@ namespace WiShark
         }
 
         private int lastCheck = -1;
+        //CheckedListBox handler
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int toUncheck = lastCheck;

@@ -29,67 +29,48 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Encapsulation type:");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Arrival Time:");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Epoch Time:");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Frame Number:");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Frame Length:");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Capture Length:");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Frame :  bytes on wire ( bits),  bytes captured ( bits)", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Destination:");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Source:");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Type: IPv4");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Ethernet II, Src:  (mac), Dst:  (mac)", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Version:");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Header Length:");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Differentiated Services Field:");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Total Lentgh:");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Identification:");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Flags:");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Fragmented Offset:");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Time to live:");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Protocol:");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Header Checksum:");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Source:");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Destination:");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Internet Protocol Version , Src: , Dst:", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13,
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17,
-            treeNode18,
-            treeNode19,
-            treeNode20,
-            treeNode21,
-            treeNode22,
-            treeNode23});
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Source Port:");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Destination Port:");
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Checksum:");
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Length:");
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("User Datagram Protocol, Src Port: , Dst Port:", new System.Windows.Forms.TreeNode[] {
-            treeNode25,
-            treeNode26,
-            treeNode27,
-            treeNode28});
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Version:");
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("community: ");
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("data: ");
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Transmission Control Protocol, Src Port: , Dst Port: , Seq: , Ack: , Len:", new System.Windows.Forms.TreeNode[] {
-            treeNode30,
-            treeNode31,
-            treeNode32});
+            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("Interface id: ");
+            System.Windows.Forms.TreeNode treeNode48 = new System.Windows.Forms.TreeNode("Encapsulation type: Ethernet");
+            System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("Arrival Time: ");
+            System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("Epoch Time: ");
+            System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("Frame Number: ");
+            System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("Frame Length: ");
+            System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("Capture Length: ");
+            System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("Frame ", new System.Windows.Forms.TreeNode[] {
+            treeNode47,
+            treeNode48,
+            treeNode49,
+            treeNode50,
+            treeNode51,
+            treeNode52,
+            treeNode53});
+            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("Destination: ");
+            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("Source: ");
+            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("Type: ");
+            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("Ethernet II, Src: ", new System.Windows.Forms.TreeNode[] {
+            treeNode55,
+            treeNode56,
+            treeNode57});
+            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("Version: 4");
+            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("Header Length: ");
+            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("Time to live: ");
+            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("Protocol: ");
+            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("Source: ");
+            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("Destination: ");
+            System.Windows.Forms.TreeNode treeNode65 = new System.Windows.Forms.TreeNode("Internet Protocol Version, Src: ", new System.Windows.Forms.TreeNode[] {
+            treeNode59,
+            treeNode60,
+            treeNode61,
+            treeNode62,
+            treeNode63,
+            treeNode64});
+            System.Windows.Forms.TreeNode treeNode66 = new System.Windows.Forms.TreeNode("Source Port: ");
+            System.Windows.Forms.TreeNode treeNode67 = new System.Windows.Forms.TreeNode("Destination Port: ");
+            System.Windows.Forms.TreeNode treeNode68 = new System.Windows.Forms.TreeNode("Flags: ");
+            System.Windows.Forms.TreeNode treeNode69 = new System.Windows.Forms.TreeNode("Transmission Control Protocol, Src Port: ", new System.Windows.Forms.TreeNode[] {
+            treeNode66,
+            treeNode67,
+            treeNode68});
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -251,12 +232,15 @@
             this.Length,
             this.Info});
             this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 117);
+            this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1018, 192);
             this.listView1.TabIndex = 5;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // Nom
             // 
@@ -298,78 +282,57 @@
             this.treeView1.Location = new System.Drawing.Point(0, 306);
             this.treeView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "Encapsulation type";
-            treeNode1.Text = "Encapsulation type:";
-            treeNode2.Name = "Arrival Time";
-            treeNode2.Text = "Arrival Time:";
-            treeNode3.Name = "Epoch Time";
-            treeNode3.Text = "Epoch Time:";
-            treeNode4.Name = "Frame Number";
-            treeNode4.Text = "Frame Number:";
-            treeNode5.Name = "Frame Length";
-            treeNode5.Text = "Frame Length:";
-            treeNode6.Name = "Capture Length";
-            treeNode6.Text = "Capture Length:";
-            treeNode7.Name = "Frame";
-            treeNode7.Text = "Frame :  bytes on wire ( bits),  bytes captured ( bits)";
-            treeNode8.Name = "Destination";
-            treeNode8.Text = "Destination:";
-            treeNode9.Name = "Source";
-            treeNode9.Text = "Source:";
-            treeNode10.Name = "Type";
-            treeNode10.Text = "Type: IPv4";
-            treeNode11.Name = "Ethernet";
-            treeNode11.Text = "Ethernet II, Src:  (mac), Dst:  (mac)";
-            treeNode12.Name = "Version";
-            treeNode12.Text = "Version:";
-            treeNode13.Name = "Header Length";
-            treeNode13.Text = "Header Length:";
-            treeNode14.Name = "Differentiated Services Field";
-            treeNode14.Text = "Differentiated Services Field:";
-            treeNode15.Name = "Total Length";
-            treeNode15.Text = "Total Lentgh:";
-            treeNode16.Name = "Identification";
-            treeNode16.Text = "Identification:";
-            treeNode17.Name = "Flags";
-            treeNode17.Text = "Flags:";
-            treeNode18.Name = "Fragmented Offset";
-            treeNode18.Text = "Fragmented Offset:";
-            treeNode19.Name = "Time to live";
-            treeNode19.Text = "Time to live:";
-            treeNode20.Name = "Protocol";
-            treeNode20.Text = "Protocol:";
-            treeNode21.Name = "Header Checksum";
-            treeNode21.Text = "Header Checksum:";
-            treeNode22.Name = "Source";
-            treeNode22.Text = "Source:";
-            treeNode23.Name = "Destination";
-            treeNode23.Text = "Destination:";
-            treeNode24.Name = "IP";
-            treeNode24.Text = "Internet Protocol Version , Src: , Dst:";
-            treeNode25.Name = "Source Port";
-            treeNode25.Text = "Source Port:";
-            treeNode26.Name = "Destinaton Port";
-            treeNode26.Text = "Destination Port:";
-            treeNode27.Name = "Checksum";
-            treeNode27.Text = "Checksum:";
-            treeNode28.Name = "Length";
-            treeNode28.Text = "Length:";
-            treeNode29.Name = "Internet Control";
-            treeNode29.Text = "User Datagram Protocol, Src Port: , Dst Port:";
-            treeNode30.Name = "Version";
-            treeNode30.Text = "Version:";
-            treeNode31.Name = "community";
-            treeNode31.Text = "community: ";
-            treeNode32.Name = "data";
-            treeNode32.Text = "data: ";
-            treeNode33.Name = "Transmission Control Protocol";
-            treeNode33.Text = "Transmission Control Protocol, Src Port: , Dst Port: , Seq: , Ack: , Len:";
+            treeNode47.Name = "Interface id";
+            treeNode47.Text = "Interface id: ";
+            treeNode48.Name = "Encapsulation type";
+            treeNode48.Text = "Encapsulation type: Ethernet";
+            treeNode49.Name = "Arrival Time";
+            treeNode49.Text = "Arrival Time: ";
+            treeNode50.Name = "Epoch Time";
+            treeNode50.Text = "Epoch Time: ";
+            treeNode51.Name = "Frame Number";
+            treeNode51.Text = "Frame Number: ";
+            treeNode52.Name = "Frame Length";
+            treeNode52.Text = "Frame Length: ";
+            treeNode53.Name = "Capture Length";
+            treeNode53.Text = "Capture Length: ";
+            treeNode54.Name = "Frame";
+            treeNode54.Text = "Frame ";
+            treeNode55.Name = "Destination";
+            treeNode55.Text = "Destination: ";
+            treeNode56.Name = "Source";
+            treeNode56.Text = "Source: ";
+            treeNode57.Name = "Type";
+            treeNode57.Text = "Type: ";
+            treeNode58.Name = "Ethernet";
+            treeNode58.Text = "Ethernet II, Src: ";
+            treeNode59.Name = "Version";
+            treeNode59.Text = "Version: 4";
+            treeNode60.Name = "Header Length";
+            treeNode60.Text = "Header Length: ";
+            treeNode61.Name = "Time to live";
+            treeNode61.Text = "Time to live: ";
+            treeNode62.Name = "Protocol";
+            treeNode62.Text = "Protocol: ";
+            treeNode63.Name = "Source";
+            treeNode63.Text = "Source: ";
+            treeNode64.Name = "Destination";
+            treeNode64.Text = "Destination: ";
+            treeNode65.Name = "IP";
+            treeNode65.Text = "Internet Protocol Version, Src: ";
+            treeNode66.Name = "Source Port";
+            treeNode66.Text = "Source Port: ";
+            treeNode67.Name = "Destinaton Port";
+            treeNode67.Text = "Destination Port: ";
+            treeNode68.Name = "Flags";
+            treeNode68.Text = "Flags: ";
+            treeNode69.Name = "Transmission Control Protocol";
+            treeNode69.Text = "Transmission Control Protocol, Src Port: ";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode11,
-            treeNode24,
-            treeNode29,
-            treeNode33});
+            treeNode54,
+            treeNode58,
+            treeNode65,
+            treeNode69});
             this.treeView1.Size = new System.Drawing.Size(1018, 127);
             this.treeView1.TabIndex = 6;
             // 
