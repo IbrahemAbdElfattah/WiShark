@@ -22,10 +22,6 @@ namespace WiShark
         {
 
         }
-        private List<string> PacketQueue = new List<string>();
-        Dictionary<string, object> treeCommponents = new Dictionary<string, object>();
-        private string[] trees = new string[16];
-        ArrayList tree = new ArrayList();
         string [,] Trees = new string[2000, 16];
 
         string bframe = " ";
@@ -40,6 +36,7 @@ namespace WiShark
         string bdest = " ";
         string bdestMac = " ";
         string btype;
+        string bversion = " ";
         string bHeaderLength = " ";
         string bTimeToLive = " ";
         string bprotocol = " ";
@@ -48,6 +45,12 @@ namespace WiShark
         string bdestPort = " ";
         string bip = " ";
         string bTransmission = " ";
+        int ind = 0;
+
+        ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
+        System.IO.StreamWriter file = new System.IO.StreamWriter("Packet.txt");
+        System.IO.StreamWriter File = new System.IO.StreamWriter("Packets.txt");
+
 
         public Form2()
         {
@@ -70,6 +73,7 @@ namespace WiShark
             bsourceMac = treeView1.Nodes[1].Nodes[1].Text;
             bdestMac = treeView1.Nodes[1].Nodes[0].Text;
             btype = treeView1.Nodes[1].Nodes[2].Text;
+            bversion = treeView1.Nodes[2].Nodes[0].Text;
             bHeaderLength = treeView1.Nodes[2].Nodes[1].Text;
             bTimeToLive = treeView1.Nodes[2].Nodes[2].Text;
             bprotocol = treeView1.Nodes[2].Nodes[3].Text;
@@ -86,9 +90,7 @@ namespace WiShark
             n.Show();
             this.Hide();
         }
-        ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
-        System.IO.StreamWriter file = new System.IO.StreamWriter("Packet.txt");
-        System.IO.StreamWriter File = new System.IO.StreamWriter("Packets.txt");
+       
         void getPackets()
         {
 
@@ -103,14 +105,20 @@ namespace WiShark
             // Start the capturing process
             device.StartCapture();
 
+            if (ind >= 2000)
+            {
+                device.StopCapture();
+            }
 
 
         }
 
-        int ind = 0;
         
         private void device_OnPacketArrival(object sender, CaptureEventArgs e)
         {
+            if (ind >= 2000)
+                return;
+
             treeView1.Nodes[0].Text = bframe;
             treeView1.Nodes[1].Text = bethernet;
             treeView1.Nodes[2].Text = bip;
@@ -123,6 +131,7 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
             treeView1.Nodes[1].Nodes[0].Text = bdestMac;
             treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
             treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
             treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
             treeView1.Nodes[2].Nodes[3].Text = bprotocol;
@@ -132,7 +141,6 @@ namespace WiShark
             treeView1.Nodes[3].Nodes[1].Text = bdestPort;
             treeView1.Nodes[3].Nodes[2].Text = bFlags;
         
-            trees.Initialize();
             
 
             //
@@ -276,7 +284,6 @@ namespace WiShark
             DateTime time = e.Packet.Timeval.Date;
             var len = e.Packet.Data.Length;
             File.WriteLine(p);
-            PacketQueue.Add(y);
             Tim = time.Hour.ToString() + ":" + time.Minute.ToString() + ":" + time.Second.ToString() + "." + time.Millisecond.ToString();
             Len = len.ToString();
             framelentgh = Len;
@@ -293,7 +300,7 @@ namespace WiShark
                 frameNum = No;
                 protocol = NextHeader;
                 HeaderLength = " ";
-                TimeToLive = " ";
+                //TimeToLive = " ";
                 Flags = " ";
                 Tim = time.ToString();
 
@@ -360,9 +367,13 @@ namespace WiShark
             treeView1.Nodes[0].Text += (No + ": " + framelentgh + " bytes on wire (" + (int.Parse(framelentgh) * 8).ToString() + 
                 " bits), " + framelentgh + " bytes captured (" + (int.Parse(framelentgh) * 8).ToString() + " bits) on interface " + Form1.Globals.index.ToString());
             treeView1.Nodes[1].Text += (sourceMac + ", Dst: " + destMac);
-            treeView1.Nodes[2].Text += (source + ", Dst: " + dest);
+            treeView1.Nodes[2].Text += (type[(type.Length - 1)].ToString() + ", Src: " + source + ", Dst: " + dest);
             if (protocol == "UDP")
             { treeView1.Nodes[3].Text = ("User Datagram Protocol, Src Port: " + sourcePort + ", Dst Port: " + destPort); }
+            else if (protocol == "IGMP")
+            { treeView1.Nodes[3].Text = "Internet Group Management Protocol"; }
+            else if (protocol == "ICMPV6")
+            { treeView1.Nodes[3].Text = "Internet Control Message Protocol v6"; }
             else { treeView1.Nodes[3].Text += (sourcePort + ", Dst Port: " + destPort); }
             //add data to nades of root 0 (frame)
             treeView1.Nodes[0].Nodes[0].Text += (Form1.Globals.index.ToString() + " " + Form1.Globals.devices[Form1.Globals.index].Name.ToString());
@@ -375,55 +386,56 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[0].Text += destMac;
             treeView1.Nodes[1].Nodes[2].Text += type;
             //add data to nades of root 2 (IP)
+            treeView1.Nodes[2].Nodes[0].Text += type[(type.Length - 1)];
             treeView1.Nodes[2].Nodes[1].Text += HeaderLength;
             treeView1.Nodes[2].Nodes[2].Text += TimeToLive;
             treeView1.Nodes[2].Nodes[3].Text += protocol;
             treeView1.Nodes[2].Nodes[4].Text += source;
             treeView1.Nodes[2].Nodes[5].Text += dest;
             //add data to nades of root 3 (Transmission)
-            treeView1.Nodes[3].Nodes[0].Text += sourcePort;
-            treeView1.Nodes[3].Nodes[1].Text += destPort;
-            treeView1.Nodes[3].Nodes[2].Text += Flags;
+            if (protocol == "IGMP")
+            {
+                treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
+                treeView1.Nodes[3].Nodes[1].Text = "Max Resp Time: " + destPort;
+                treeView1.Nodes[3].Nodes[2].Text = "Multicast Address: " + Flags;
+            }
+            else if (protocol == "ICMPV6")
+            {
+                treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
+                treeView1.Nodes[3].Nodes[1].Text =  "Code: 0" + destPort;
+                treeView1.Nodes[3].Nodes[2].Text += Flags;
+            }
+                
+            else
+            {
+                treeView1.Nodes[3].Nodes[0].Text += sourcePort;
+                treeView1.Nodes[3].Nodes[1].Text += destPort;
+                treeView1.Nodes[3].Nodes[2].Text += Flags;
+            }
         }
 
           void addItemsToList(string No, string frameNum, string framelentgh, string capturelength, string sourceMac, string destMac, string type, string source, string dest,
               string sourcePort, string destPort, string Tim, string HeaderLength, string TimeToLive, string protocol, string Flags)
           {
-              Trees[int.Parse(No), 0] = No;
-              Trees[int.Parse(No), 1] = Tim;
-              Trees[int.Parse(No), 2] = frameNum;
-              Trees[int.Parse(No), 3] = framelentgh;
-              Trees[int.Parse(No), 4] = capturelength;
-              Trees[int.Parse(No), 5] = destMac;
-              Trees[int.Parse(No), 6] = sourceMac;
-              Trees[int.Parse(No), 7] = type;
-              Trees[int.Parse(No), 8] = HeaderLength;
-              Trees[int.Parse(No), 9] = TimeToLive;
-              Trees[int.Parse(No), 10] = protocol;
-              Trees[int.Parse(No), 11] = source;
-              Trees[int.Parse(No), 12] = dest;
-              Trees[int.Parse(No), 13] = sourcePort;
-              Trees[int.Parse(No), 14] = destPort;
-              Trees[int.Parse(No), 15] = Flags;
-              // add data to list
-              trees[0]=No;//0
-              trees[1]=Tim;//1
-              trees[2]=frameNum;//2
-              trees[3]=framelentgh;//3
-              trees[4]=capturelength;//4
-              trees[5]=destMac;//5
-              trees[6]=sourceMac;//6
-              trees[7]=type;//7
-              trees[8]=HeaderLength;//8
-              trees[9]=TimeToLive;//9
-              trees[10]=protocol;//10
-              trees[11]=source;//11
-              trees[12]=dest;//12
-              trees[13]=sourcePort;//13
-              trees[14]=destPort;//14
-              trees[15]=Flags;//15
-            
-              treeCommponents.Add(No, trees) ;
+              if (int.Parse(No) < 2000)
+              {
+                  Trees[int.Parse(No), 0] = No;
+                  Trees[int.Parse(No), 1] = Tim;
+                  Trees[int.Parse(No), 2] = frameNum;
+                  Trees[int.Parse(No), 3] = framelentgh;
+                  Trees[int.Parse(No), 4] = capturelength;
+                  Trees[int.Parse(No), 5] = destMac;
+                  Trees[int.Parse(No), 6] = sourceMac;
+                  Trees[int.Parse(No), 7] = type;
+                  Trees[int.Parse(No), 8] = HeaderLength;
+                  Trees[int.Parse(No), 9] = TimeToLive;
+                  Trees[int.Parse(No), 10] = protocol;
+                  Trees[int.Parse(No), 11] = source;
+                  Trees[int.Parse(No), 12] = dest;
+                  Trees[int.Parse(No), 13] = sourcePort;
+                  Trees[int.Parse(No), 14] = destPort;
+                  Trees[int.Parse(No), 15] = Flags;
+              }
             
           }
 
@@ -451,6 +463,7 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
             treeView1.Nodes[1].Nodes[0].Text = bdestMac;
             treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
             treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
             treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
             treeView1.Nodes[2].Nodes[3].Text = bprotocol;
@@ -495,6 +508,7 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
             treeView1.Nodes[1].Nodes[0].Text = bdestMac;
             treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
             treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
             treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
             treeView1.Nodes[2].Nodes[3].Text = bprotocol;
@@ -542,6 +556,7 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
             treeView1.Nodes[1].Nodes[0].Text = bdestMac;
             treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
             treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
             treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
             treeView1.Nodes[2].Nodes[3].Text = bprotocol;
@@ -582,6 +597,7 @@ namespace WiShark
             treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
             treeView1.Nodes[1].Nodes[0].Text = bdestMac;
             treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
             treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
             treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
             treeView1.Nodes[2].Nodes[3].Text = bprotocol;
@@ -599,6 +615,8 @@ namespace WiShark
             textBox1.Text = "";
 
         }
+
+       
 
         
 

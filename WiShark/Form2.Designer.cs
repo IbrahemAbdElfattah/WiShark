@@ -51,13 +51,13 @@
             treeNode9,
             treeNode10,
             treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Version: 4");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Version: ");
             System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Header Length: ");
             System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Time to live: ");
             System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Protocol: ");
             System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Source: ");
             System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Destination: ");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Internet Protocol Version, Src: ", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Internet Protocol Version ", new System.Windows.Forms.TreeNode[] {
             treeNode13,
             treeNode14,
             treeNode15,
@@ -114,6 +114,7 @@
             // 
             // button6
             // 
+            this.button6.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
             this.button6.Location = new System.Drawing.Point(21, 9);
             this.button6.Name = "button6";
@@ -234,7 +235,7 @@
             this.Info});
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 117);
+            this.listView1.Location = new System.Drawing.Point(0, 114);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(1018, 192);
@@ -280,6 +281,9 @@
             // 
             // treeView1
             // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.Location = new System.Drawing.Point(0, 306);
             this.treeView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeView1.Name = "treeView1";
@@ -308,7 +312,7 @@
             treeNode12.Name = "Ethernet";
             treeNode12.Text = "Ethernet II, Src: ";
             treeNode13.Name = "Version";
-            treeNode13.Text = "Version: 4";
+            treeNode13.Text = "Version: ";
             treeNode14.Name = "Header Length";
             treeNode14.Text = "Header Length: ";
             treeNode15.Name = "Time to live";
@@ -320,7 +324,7 @@
             treeNode18.Name = "Destination";
             treeNode18.Text = "Destination: ";
             treeNode19.Name = "IP";
-            treeNode19.Text = "Internet Protocol Version, Src: ";
+            treeNode19.Text = "Internet Protocol Version ";
             treeNode20.Name = "Source Port";
             treeNode20.Text = "Source Port: ";
             treeNode21.Name = "Destinaton Port";
@@ -350,7 +354,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form2";
