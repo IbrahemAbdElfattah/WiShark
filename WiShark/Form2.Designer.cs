@@ -72,6 +72,7 @@
             treeNode21,
             treeNode22});
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -98,6 +99,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -105,20 +107,30 @@
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Location = new System.Drawing.Point(0, -6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1017, 56);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // button7
+            // 
+            this.button7.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
+            this.button7.Location = new System.Drawing.Point(980, 5);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(38, 33);
+            this.button7.TabIndex = 9;
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // button6
             // 
             this.button6.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.Location = new System.Drawing.Point(21, 9);
+            this.button6.Location = new System.Drawing.Point(-1, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(45, 45);
+            this.button6.Size = new System.Drawing.Size(38, 33);
             this.button6.TabIndex = 8;
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
@@ -126,7 +138,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(519, 41);
+            this.label4.Location = new System.Drawing.Point(795, 40);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 13);
             this.label4.TabIndex = 7;
@@ -135,7 +147,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(361, 41);
+            this.label3.Location = new System.Drawing.Point(537, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 7;
@@ -144,7 +156,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(191, 41);
+            this.label2.Location = new System.Drawing.Point(278, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 6;
@@ -153,7 +165,7 @@
             // button3
             // 
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(340, 5);
+            this.button3.Location = new System.Drawing.Point(518, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(65, 33);
             this.button3.TabIndex = 2;
@@ -163,7 +175,7 @@
             // button2
             // 
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(503, 5);
+            this.button2.Location = new System.Drawing.Point(779, 5);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(65, 33);
             this.button2.TabIndex = 1;
@@ -173,7 +185,7 @@
             // button1
             // 
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(174, 5);
+            this.button1.Location = new System.Drawing.Point(260, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 33);
             this.button1.TabIndex = 0;
@@ -188,6 +200,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Apply";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label1
             // 
@@ -346,6 +359,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1017, 607);
+            this.ControlBox = false;
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button4);
@@ -391,5 +405,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button button7;
     }
 }
