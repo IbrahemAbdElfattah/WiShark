@@ -22,9 +22,10 @@ namespace WiShark
         {
 
         }
+        List<string[]> trees = new List<string[]>();
         string [,] Trees = new string[2000, 16];
         string[] packetarrayinfo = new string[2000];
-
+        List<string> PacketListInfo = new List<string>();
         string bframe = " ";
         string bTim = " ";
         string bframeNum = " ";
@@ -47,11 +48,11 @@ namespace WiShark
         string bip = " ";
         string bTransmission = " ";
 
-        string Filt = " ";
+        string Filt = "";
         int ind = 0;
         bool Flag = false;
         ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
-       // System.IO.StreamWriter file = new System.IO.StreamWriter("Packet.txt");
+       //System.IO.StreamWriter file = new System.IO.StreamWriter("Packet.txt");
         //System.IO.StreamWriter File = new System.IO.StreamWriter("Packets.txt");
 
 
@@ -61,7 +62,7 @@ namespace WiShark
             //getdevices();
             button1.Enabled = false;
             button4.Enabled = true;
-            button5.Enabled = false;
+            //button5.Enabled = false;
 
             getPackets();
 
@@ -110,10 +111,10 @@ namespace WiShark
             // Start the capturing process
             device.StartCapture();
 
-            if (ind >= 2000)
+           /* if (ind >= 2000)
             {
                 device.StopCapture();
-            }
+            }*/
 
 
         }
@@ -121,8 +122,8 @@ namespace WiShark
         
         private void device_OnPacketArrival(object sender, CaptureEventArgs e)
         {
-            if (ind >= 2000)
-                return;
+            /*if (ind >= 2000)
+                return;*/
             //retrieve initial state of treeView
             treeView1.Nodes[0].Text = bframe;
             treeView1.Nodes[1].Text = bethernet;
@@ -300,7 +301,8 @@ namespace WiShark
             if (Typ == "IpV6")
             {
                 ind++;
-                packetarrayinfo[ind] = y;
+                PacketListInfo.Add(y);
+                //packetarrayinfo[ind] = y;
                 No = ind.ToString();
                 destPort = TimeToLive;
                 sourcePort = protocol;
@@ -313,7 +315,7 @@ namespace WiShark
                 Tim = time.ToString();
 
                 //making filter
-                if (Filt != " ")
+                if (Filt != "")
                 {
                     if (protocol != Filt)
                     {
@@ -336,7 +338,8 @@ namespace WiShark
             if (Typ == "IpV4")
             {
                 ind++;
-                packetarrayinfo[ind] = y;
+                PacketListInfo.Add(y);
+                //packetarrayinfo[ind] = y;
                 No = ind.ToString();
                 frameNum = No;
                 Tim = time.ToString();
@@ -344,7 +347,7 @@ namespace WiShark
                     destPort = DestPort;
 
                 //making filter
-                if (Filt != " ")
+                if (Filt != "")
                 {
                     if (protocol != Filt)
                     {
@@ -372,7 +375,7 @@ namespace WiShark
         void drawListView(string No, string Tim, string source, string dest, string protocol, string Len, string info)
         {
             // adding data to list view
-            if (Filt != " ")
+            if (Filt != "")
             {
                 ListViewItem packetitem = new ListViewItem(No);
                 packetitem.SubItems.Add(Tim);
@@ -386,7 +389,7 @@ namespace WiShark
             }
             else
             {
-                ListViewItem packetitem = new ListViewItem((ind).ToString());
+                ListViewItem packetitem = new ListViewItem(No);
                 packetitem.SubItems.Add(Tim);
                 packetitem.SubItems.Add(source);
                 packetitem.SubItems.Add(dest);
@@ -459,8 +462,30 @@ namespace WiShark
           void addItemsToList(string No, string frameNum, string framelentgh, string capturelength, string sourceMac, string destMac, string type, string source, string dest,
               string sourcePort, string destPort, string Tim, string HeaderLength, string TimeToLive, string protocol, string Flags)
           {
-              if (int.Parse(No) < 2000)
-              {
+              /*if (int.Parse(No) < 2000)
+              {*/
+                  //add packet data to list
+                  string[] tree = new string[16];
+                  // add data to list
+                  tree[0] = No;//0
+                  tree[1] = Tim;//1
+                  tree[2] = frameNum;//2
+                  tree[3] = framelentgh;//3
+                  tree[4] = capturelength;//4
+                  tree[5] = destMac;//5
+                  tree[6] = sourceMac;//6
+                  tree[7] = type;//7
+                  tree[8] = HeaderLength;//8
+                  tree[9] = TimeToLive;//9
+                  tree[10] = protocol;//10
+                  tree[11] = source;//11
+                  tree[12] = dest;//12
+                  tree[13] = sourcePort;//13
+                  tree[14] = destPort;//14
+                  tree[15] = Flags;//15
+
+                  trees.Add(tree);
+                  /*
                   //add packet data to 2D array
                   Trees[int.Parse(No), 0] = No;
                   Trees[int.Parse(No), 1] = Tim;
@@ -477,8 +502,8 @@ namespace WiShark
                   Trees[int.Parse(No), 12] = dest;
                   Trees[int.Parse(No), 13] = sourcePort;
                   Trees[int.Parse(No), 14] = destPort;
-                  Trees[int.Parse(No), 15] = Flags;
-              }
+                  Trees[int.Parse(No), 15] = Flags;*/
+              //}
             
           }
 
@@ -494,8 +519,10 @@ namespace WiShark
             button2.Enabled = true;
             button3.Enabled = true;
             button4.Enabled = true;
-            button5.Enabled = false;
+            //button5.Enabled = false;
+            indexOfSelected = 0;
 
+            trees.Clear();
             //retrieve initial state of treeView
             treeView1.Nodes[0].Text = bframe;
             treeView1.Nodes[1].Text = bethernet;
@@ -532,7 +559,7 @@ namespace WiShark
             button2.Enabled = false;
             button3.Enabled = false;
             button1.Enabled = true;
-            button5.Enabled = true;
+            //button5.Enabled = true;
 
         }
 
@@ -543,7 +570,10 @@ namespace WiShark
             ind = 0;
             device.StopCapture();
             device.Close();
-            button5.Enabled = false;
+            //button5.Enabled = false;
+            indexOfSelected = 0;
+
+            trees.Clear();
 
             //retrieve initial state of treeView
             treeView1.Nodes[0].Text = bframe;
@@ -612,18 +642,21 @@ namespace WiShark
             treeView1.Nodes[3].Nodes[2].Text = bFlags;
         
 
-
+            //get index of selected item
             if (listView1.SelectedIndices.Count > 0)
             {
-                if (Filt == " ")
+                if (Filt == "")
                 {
                     indexOfSelected = listView1.SelectedIndices[0];
                 }
                 else { indexOfSelected = int.Parse(listView1.Items[listView1.SelectedIndices[0]].Text); }
-                drawTreeView(Trees[indexOfSelected, 0], Trees[indexOfSelected, 2], Trees[indexOfSelected, 3], Trees[indexOfSelected, 4], 
-                    Trees[indexOfSelected, 6], Trees[indexOfSelected, 5], Trees[indexOfSelected, 7], Trees[indexOfSelected, 11], 
-                    Trees[indexOfSelected, 12], Trees[indexOfSelected, 13], Trees[indexOfSelected, 14], Trees[indexOfSelected, 1], 
-                   Trees[indexOfSelected, 8], Trees[indexOfSelected, 9], Trees[indexOfSelected, 10], Trees[indexOfSelected, 15]);
+
+                //draw treeView of packed data of selected item
+                drawTreeView(trees[indexOfSelected][0], trees[indexOfSelected][2], trees[indexOfSelected][3], trees[indexOfSelected][4], 
+                    trees[indexOfSelected][6], trees[indexOfSelected][5], trees[indexOfSelected][7], trees[indexOfSelected][11], 
+                    trees[indexOfSelected][12], trees[indexOfSelected][13], trees[indexOfSelected][14], trees[indexOfSelected][1], 
+                   trees[indexOfSelected][8], trees[indexOfSelected][9], trees[indexOfSelected][10], trees[indexOfSelected][15]);
+            
             }
            
         }
@@ -633,16 +666,18 @@ namespace WiShark
         private void button5_Click(object sender, EventArgs e)
         {
             //clear filter button
-           textBox1.Text = " ";
+           textBox1.Text = "";
            listView1.Items.Clear();
-           
-            for (int i = 0; i < ind; i++)
+           Filt = "";
+           indexOfSelected = 0;
+           for (int i = 0; i < trees.Count; i++)
            {
-               drawListView(Trees[i, 0], Trees[i, 1], Trees[i, 11], Trees[i, 12], Trees[i, 10], Trees[i, 3], packetarrayinfo[i]);
-               drawTreeView(Trees[i, 0], Trees[i, 2], Trees[i, 3], Trees[i, 4], Trees[i, 6], Trees[i, 5], Trees[i, 7],
-               Trees[i, 11], Trees[i, 12], Trees[i, 13], Trees[i, 14], Trees[i, 1], Trees[i, 8], Trees[i, 9], Trees[i, 10], Trees[i, 15]);
+               drawListView(trees[i][0], trees[i][1], trees[i][11], trees[i][12], trees[i][10], trees[i][3], PacketListInfo[i]);
+
+               drawTreeView(trees[i][0], trees[i][2], trees[i][3], trees[i][4], trees[i][6], trees[i][5], trees[i][7], trees[i][11],
+                   trees[i][12], trees[i][13], trees[i][14], trees[i][1], trees[i][8], trees[i][9], trees[i][10], trees[i][15]);
+               
            }
-           ind++;
             
 
         }
@@ -651,21 +686,37 @@ namespace WiShark
         {
             //apply filter  button
             Filt = textBox1.Text;
-            listView1.Items.Clear();
-            indexOfSelected = 0;
-           
-            for (int i = 0; i < ind; i++)
+            if (Filt == "")
             {
-                if (Trees[i, 10] == Filt)
+                MessageBox.Show("Please enter a valid protocol");
+                return;
+            }
+            if ((Filt == "UDP") || (Filt == "TCP") || (Filt == "IGMP") || (Filt == "ICMPV6"))
+            {
+                listView1.Items.Clear();
+                indexOfSelected = 0;
+                for (int i = 0; i < trees.Count; i++)
                 {
-                    drawListView(Trees[i, 0], Trees[i, 1], Trees[i, 11], Trees[i, 12], Trees[i, 10], Trees[i, 3], packetarrayinfo[i]);
-                    drawTreeView(Trees[i, 0], Trees[i, 2], Trees[i, 3], Trees[i, 4], Trees[i, 6], Trees[i, 5], Trees[i, 7], 
-                        Trees[i, 11], Trees[i, 12], Trees[i, 13], Trees[i, 14], Trees[i, 1], Trees[i, 8], Trees[i, 9], Trees[i, 10], Trees[i, 15]);
+                    if (trees[i][10] == Filt)
+                    {
+                        drawListView(trees[i][0], trees[i][1], trees[i][11], trees[i][12], trees[i][10], trees[i][3], PacketListInfo[i]);
+
+                        drawTreeView(trees[i][0], trees[i][2], trees[i][3], trees[i][4], trees[i][6], trees[i][5], trees[i][7], trees[i][11],
+                            trees[i][12], trees[i][13], trees[i][14], trees[i][1], trees[i][8], trees[i][9], trees[i][10], trees[i][15]);
+
+                        /*
+                        drawListView(Trees[i, 0], Trees[i, 1], Trees[i, 11], Trees[i, 12], Trees[i, 10], Trees[i, 3], packetarrayinfo[i]);
+                        drawTreeView(Trees[i, 0], Trees[i, 2], Trees[i, 3], Trees[i, 4], Trees[i, 6], Trees[i, 5], Trees[i, 7], 
+                            Trees[i, 11], Trees[i, 12], Trees[i, 13], Trees[i, 14], Trees[i, 1], Trees[i, 8], Trees[i, 9], Trees[i, 10], Trees[i, 15]);*/
+                    }
                 }
             }
-            ind++;
-            
-            //getPackets();
+            else
+            {
+                MessageBox.Show("Please enter a valid protocol");
+                return;
+            }
+
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -677,13 +728,6 @@ namespace WiShark
         }
 
        
-
-        
-
-       
-
-        
-
 
 
 
