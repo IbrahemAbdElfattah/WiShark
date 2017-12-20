@@ -1,0 +1,13 @@
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\WiShark.exe.config
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\WiShark.exe
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\WiShark.pdb
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\PacketDotNet.dll
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\SharpPcap.dll
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\PacketDotNet.xml
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\bin\Release\SharpPcap.xml
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.Form1.resources
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.Form2.resources
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.Properties.Resources.resources
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.csproj.GenerateResource.Cache
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.exe
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.pdb

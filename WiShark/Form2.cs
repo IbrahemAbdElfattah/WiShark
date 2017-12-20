@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,11 +22,14 @@ namespace WiShark
     {
         public static class Globals
         {
+            public static ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
 
         }
         List<string[]> trees = new List<string[]>();
         List<string> PacketListInfo = new List<string>();
         List<byte[]> packetsBytes = new List<byte[]>();
+        List<RawCapture> packets = new List<RawCapture>();
+        
         string bframe = " ";
         string bTim = " ";
         string bframeNum = " ";
@@ -48,19 +52,24 @@ namespace WiShark
         string bip = " ";
         string bTransmission = " ";
 
-        string capFile = "Packets.pcap";
         private static CaptureFileWriterDevice captureFileWriter;
         ByteViewer byt = new ByteViewer();
 
+        SaveFileDialog saveFile = new SaveFileDialog();
+        OpenFileDialog openFile = new OpenFileDialog();
+        bool openfileFlag = false;
         string Filt = "";
         int ind = 0;
-        ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
        
         public Form2()
         {
+           
             InitializeComponent();
             button1.Enabled = false;
             button4.Enabled = true;
+            button6.Enabled = false;
+            button8.Enabled = false;
+            button9.Enabled = false;
 
             toolTip1.Draw += new DrawToolTipEventHandler(toolTip1_Draw);
 
@@ -121,18 +130,22 @@ namespace WiShark
         void getPackets()
         {
 
-            // open the output file
-            captureFileWriter = new CaptureFileWriterDevice(capFile);
-
             // Register our handler function to the 'packet arrival' event
-            device.OnPacketArrival +=
+            Globals.device.OnPacketArrival +=
                 new PacketArrivalEventHandler(device_OnPacketArrival);
 
             // Open the device for capturing
             int readTimeoutMilliseconds = 1000;
-            device.Open(DeviceMode.Promiscuous, readTimeoutMilliseconds);
+            if (openfileFlag == true)
+            {
+                Globals.device.Open();
+            }
+            else
+            {
+                Globals.device.Open(DeviceMode.Promiscuous, readTimeoutMilliseconds);
+            }
             // Start the capturing process
-            device.StartCapture();
+            Globals.device.StartCapture();
 
            
 
@@ -184,29 +197,8 @@ namespace WiShark
 
         private void device_OnPacketArrival(object sender, CaptureEventArgs e)
         {
-            
-            //retrieve initial state of treeView
-            treeView1.Nodes[0].Text = bframe;
-            treeView1.Nodes[1].Text = bethernet;
-            treeView1.Nodes[2].Text = bip;
-            treeView1.Nodes[3].Text = bTransmission;
-            treeView1.Nodes[0].Nodes[0].Text = binterface;
-            treeView1.Nodes[0].Nodes[2].Text = bTim;
-            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
-            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
-            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
-            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
-            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
-            treeView1.Nodes[1].Nodes[2].Text = btype;
-            treeView1.Nodes[2].Nodes[0].Text = bversion;
-            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
-            treeView1.Nodes[2].Nodes[4].Text = bsource;
-            treeView1.Nodes[2].Nodes[5].Text = bdest;
-            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
-            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
-            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+
+            initialvalues();
         
             
 
@@ -232,8 +224,7 @@ namespace WiShark
             string NextHeader = " ";
 
             // write the packet to the file
-            captureFileWriter.Write(e.Packet);
-
+            packets.Add(e.Packet);
             Packet p = PacketDotNet.Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
 
             packetsBytes.Add(p.Bytes);
@@ -567,28 +558,7 @@ namespace WiShark
             indexOfSelected = 0;
 
             trees.Clear();
-            //retrieve initial state of treeView
-            treeView1.Nodes[0].Text = bframe;
-            treeView1.Nodes[1].Text = bethernet;
-            treeView1.Nodes[2].Text = bip;
-            treeView1.Nodes[3].Text = bTransmission;
-            treeView1.Nodes[0].Nodes[0].Text = binterface;
-            treeView1.Nodes[0].Nodes[2].Text = bTim;
-            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
-            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
-            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
-            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
-            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
-            treeView1.Nodes[1].Nodes[2].Text = btype;
-            treeView1.Nodes[2].Nodes[0].Text = bversion;
-            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
-            treeView1.Nodes[2].Nodes[4].Text = bsource;
-            treeView1.Nodes[2].Nodes[5].Text = bdest;
-            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
-            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
-            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+            initialvalues();
         
         }
 
@@ -597,9 +567,9 @@ namespace WiShark
         private void button3_Click(object sender, EventArgs e)
         {
             //stop button
-            label5.Text = device.Statistics.ToString();
-            device.StopCapture();
-            device.Close();
+            label5.Text = Globals.device.Statistics.ToString();
+            Globals.device.StopCapture();
+            Globals.device.Close();
             button2.Enabled = false;
             button3.Enabled = false;
             button1.Enabled = true;
@@ -615,34 +585,17 @@ namespace WiShark
             //restart button
             listView1.Items.Clear();
             ind = 0;
-            device.StopCapture();
-            device.Close();
+            Globals.device.StopCapture();
+            Globals.device.Close();
             indexOfSelected = 0;
 
             trees.Clear();
 
-            //retrieve initial state of treeView
-            treeView1.Nodes[0].Text = bframe;
-            treeView1.Nodes[1].Text = bethernet;
-            treeView1.Nodes[2].Text = bip;
-            treeView1.Nodes[3].Text = bTransmission;
-            treeView1.Nodes[0].Nodes[0].Text = binterface;
-            treeView1.Nodes[0].Nodes[2].Text = bTim;
-            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
-            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
-            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
-            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
-            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
-            treeView1.Nodes[1].Nodes[2].Text = btype;
-            treeView1.Nodes[2].Nodes[0].Text = bversion;
-            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
-            treeView1.Nodes[2].Nodes[4].Text = bsource;
-            treeView1.Nodes[2].Nodes[5].Text = bdest;
-            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
-            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
-            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+            button6.Enabled = false;
+            button8.Enabled = false;
+            button9.Enabled = false;
+
+            initialvalues();
         
             getPackets();
         }
@@ -650,8 +603,8 @@ namespace WiShark
         private void button6_Click(object sender, EventArgs e)
         {
             //back button
-            device.StopCapture();
-            device.Close();
+            Globals.device.StopCapture();
+            Globals.device.Close();
             
             Form1 x = new Form1();
             x.Show();
@@ -664,28 +617,7 @@ namespace WiShark
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //retrieve initial state of treeView
-            treeView1.Nodes[0].Text = bframe;
-            treeView1.Nodes[1].Text = bethernet;
-            treeView1.Nodes[2].Text = bip;
-            treeView1.Nodes[3].Text = bTransmission;
-            treeView1.Nodes[0].Nodes[0].Text = binterface;
-            treeView1.Nodes[0].Nodes[2].Text = bTim;
-            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
-            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
-            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
-            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
-            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
-            treeView1.Nodes[1].Nodes[2].Text = btype;
-            treeView1.Nodes[2].Nodes[0].Text = bversion;
-            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
-            treeView1.Nodes[2].Nodes[4].Text = bsource;
-            treeView1.Nodes[2].Nodes[5].Text = bdest;
-            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
-            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
-            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+            initialvalues();
         
 
             //get index of selected item
@@ -736,7 +668,7 @@ namespace WiShark
             Filt = textBox1.Text;
             if (Filt == "")
             {
-                MessageBox.Show("Please enter a valid protocol");
+                MessageBox.Show("Please enter a valid protocol!", "Error");
                 return;
             }
             if ((Filt == "UDP") || (Filt == "TCP") || (Filt == "IGMP") || (Filt == "ICMPV6"))
@@ -758,7 +690,7 @@ namespace WiShark
             }
             else
             {
-                MessageBox.Show("Please enter a valid protocol");
+                MessageBox.Show("Please enter a valid protocol!", "Error");
                 return;
             }
 
@@ -767,8 +699,8 @@ namespace WiShark
         private void button7_Click(object sender, EventArgs e)
         {
             //Close App button
-            device.StopCapture();
-            device.Close();
+            Globals.device.StopCapture();
+            Globals.device.Close();
             Application.Exit();
         }
 
@@ -776,12 +708,14 @@ namespace WiShark
 
         public static string ByteArrayToString(byte[] ba)
         {
+            //convert byte[] to hex
             string hex = BitConverter.ToString(ba);
             return hex.Replace("-", " ");
         }
 
         private void drawHex(int packetIndex)
         {
+            //draw hex of packets
             if (packetsBytes.Count != 0){
                 byt.SetBytes(packetsBytes[packetIndex]);
                
@@ -789,16 +723,93 @@ namespace WiShark
             }
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            //save capture to file in system
+            saveFileDialog1.Title = "save capture file as";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                captureFileWriter = new CaptureFileWriterDevice(saveFileDialog1.FileName);
+                if (packets.Count > 0)
+                {
+                    for (int i = 0; i < packets.Count; i++)
+                    {
+                        captureFileWriter.Write(packets[i]);
+                    }
+                }
+
+            }
+            
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+           
+            button1.Enabled = true;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button6.Enabled = true;
+            if (packets.Count == 0)
+                button8.Enabled = false;
+
+            //open file from system
+            openFileDialog1.Title = "open capture file";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                button8.Enabled = false;
+                listView1.Items.Clear();
+                ind = 0;
+                indexOfSelected = 0;
+                trees.Clear();
+                initialvalues();
+                packets.Clear();
+                openfileFlag = true;
+            
+                try
+                {
+                    // Get an offline device
+                    Globals.device = new CaptureFileReaderDevice(openFileDialog1.FileName);
+                    getPackets();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(("Caught exception when opening file \n" + error.ToString()), "Error");
+                    return;
+                }
 
 
 
+            }
+            openfileFlag = false;
+        }
 
 
-
-
-
-
-
+        void initialvalues()
+        {
+            //retrieve initial state of treeView
+            treeView1.Nodes[0].Text = bframe;
+            treeView1.Nodes[1].Text = bethernet;
+            treeView1.Nodes[2].Text = bip;
+            treeView1.Nodes[3].Text = bTransmission;
+            treeView1.Nodes[0].Nodes[0].Text = binterface;
+            treeView1.Nodes[0].Nodes[2].Text = bTim;
+            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
+            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
+            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
+            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
+            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
+            treeView1.Nodes[1].Nodes[2].Text = btype;
+            treeView1.Nodes[2].Nodes[0].Text = bversion;
+            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
+            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
+            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
+            treeView1.Nodes[2].Nodes[4].Text = bsource;
+            treeView1.Nodes[2].Nodes[5].Text = bdest;
+            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
+            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
+            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+        }
 
 
     }

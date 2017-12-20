@@ -35,6 +35,7 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,12 +106,25 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button7
+            // 
+            this.button7.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
+            this.button7.Location = new System.Drawing.Point(948, -1);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(29, 33);
+            this.button7.TabIndex = 10;
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(977, 498);
+            this.ControlBox = false;
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.checkedListBox1);
@@ -137,6 +151,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button button7;
     }
 }
 

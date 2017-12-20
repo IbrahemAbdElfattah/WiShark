@@ -36,7 +36,7 @@ namespace WiShark
 
             if(Globals.devices.Count < 1)
             {
-                MessageBox.Show("No devices were found on this machine");
+                MessageBox.Show("No devices were found on this machine!","Error");
                 return;
             }
 
@@ -81,6 +81,14 @@ namespace WiShark
             Form2 m = new Form2();
             m.Show();
             this.Hide();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            //Close App button
+            Form2.Globals.device.StopCapture();
+            Form2.Globals.device.Close();
+            Application.Exit();
         }
 
        
