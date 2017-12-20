@@ -74,7 +74,6 @@ namespace WiShark
             
             
          }
-        private static CaptureFileWriterDevice captureFileWriter;
 
         private void button1_Click(object sender, EventArgs e)
         {

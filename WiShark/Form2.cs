@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
+using System.Design;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,6 @@ using SharpPcap;
 using SharpPcap.LibPcap;
 using SharpPcap.AirPcap;
 using SharpPcap.WinPcap;
-
 namespace WiShark
 {
     public partial class Form2 : Form
@@ -23,9 +24,8 @@ namespace WiShark
 
         }
         List<string[]> trees = new List<string[]>();
-        string [,] Trees = new string[2000, 16];
-        string[] packetarrayinfo = new string[2000];
         List<string> PacketListInfo = new List<string>();
+        List<byte[]> packetsBytes = new List<byte[]>();
         string bframe = " ";
         string bTim = " ";
         string bframeNum = " ";
@@ -48,29 +48,48 @@ namespace WiShark
         string bip = " ";
         string bTransmission = " ";
 
+        string capFile = "Packets.pcap";
+        private static CaptureFileWriterDevice captureFileWriter;
+        ByteViewer byt = new ByteViewer();
+
         string Filt = "";
         int ind = 0;
-        bool Flag = false;
         ICaptureDevice device = Form1.Globals.devices[Form1.Globals.index];
-       //System.IO.StreamWriter file = new System.IO.StreamWriter("Packet.txt");
-        //System.IO.StreamWriter File = new System.IO.StreamWriter("Packets.txt");
-
-
+       
         public Form2()
         {
             InitializeComponent();
-            //getdevices();
             button1.Enabled = false;
             button4.Enabled = true;
-            //button5.Enabled = false;
 
-            getPackets();
+            toolTip1.Draw += new DrawToolTipEventHandler(toolTip1_Draw);
+
+            byt.Location = new Point(0, 414) ;
+            byt.Size = new Size(1018,157);
+            byte[] inithex = new byte[64];
+            
+            byt.SetBytes(inithex);
+            Controls.Add(byt);
+            //popup button name
+
+            button1.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button2.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button3.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button4.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button5.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button6.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button7.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button8.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button9.MouseHover += new EventHandler(mouseHoverResponse_button);
+
+
+
 
             //save nodes initial text
             bframe = treeView1.Nodes[0].Text;
             bframeNum = treeView1.Nodes[0].Nodes[4].Text; ;
-            bframelentgh = treeView1.Nodes[0].Nodes[5].Text; ;
-            bcapturelength = treeView1.Nodes[0].Nodes[6].Text; ;
+            bframelentgh = treeView1.Nodes[0].Nodes[5].Text;
+            bcapturelength = treeView1.Nodes[0].Nodes[6].Text;
             bethernet = treeView1.Nodes[1].Text;
             bip = treeView1.Nodes[2].Text;
             bTransmission = treeView1.Nodes[3].Text;
@@ -89,18 +108,22 @@ namespace WiShark
             bdestPort = treeView1.Nodes[3].Nodes[1].Text;
             bFlags = treeView1.Nodes[3].Nodes[2].Text;
 
+            getPackets();
+
         }
-        void getdevices()
+
+        private void toolTip1_Draw(object sender, DrawToolTipEventArgs e)
         {
-            Form1 n = new Form1();
-            n.Show();
-            this.Hide();
+            e.DrawBackground();
+            e.DrawBorder();
+            e.DrawText();
         }
-       
         void getPackets()
         {
 
-            
+            // open the output file
+            captureFileWriter = new CaptureFileWriterDevice(capFile);
+
             // Register our handler function to the 'packet arrival' event
             device.OnPacketArrival +=
                 new PacketArrivalEventHandler(device_OnPacketArrival);
@@ -111,19 +134,57 @@ namespace WiShark
             // Start the capturing process
             device.StartCapture();
 
-           /* if (ind >= 2000)
-            {
-                device.StopCapture();
-            }*/
+           
 
 
         }
 
+        private void mouseHoverResponse_button(object sender, EventArgs e)
+        {
+            string buttonName = "";
+            
+            switch(((Control)sender).Name)
+            {
+                case "button1":
+                    buttonName = "start new capture";
+                    break;
+                case "button2":
+                    buttonName = "restart the running capture";
+                    break;
+                case "button3":
+                    buttonName = "stop the running capture";
+                    break;
+                case "button4":
+                    buttonName = "Apply this filter string to display";
+                    break;
+                case "button5":
+                    buttonName = "clear this filter string from display and update display";
+                    break;
+                case "button6":
+                    buttonName = "close this capture file";
+                    break;
+                case "button7":
+                    buttonName = "Exit the program";
+                    break;
+                case "button8":
+                    buttonName = "save this capture file";
+                    break;
+                case "button9":
+                    buttonName = "open a capture file";
+                    break;
+                default:
+                    return;
+            }
+            
+            toolTip1.SetToolTip((Control) sender, buttonName);
+            
+            
+        }
         
+
         private void device_OnPacketArrival(object sender, CaptureEventArgs e)
         {
-            /*if (ind >= 2000)
-                return;*/
+            
             //retrieve initial state of treeView
             treeView1.Nodes[0].Text = bframe;
             treeView1.Nodes[1].Text = bethernet;
@@ -169,10 +230,13 @@ namespace WiShark
             string framelentgh = " ";
             string capturelength = " ";
             string NextHeader = " ";
-        
 
+            // write the packet to the file
+            captureFileWriter.Write(e.Packet);
 
             Packet p = PacketDotNet.Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
+
+            packetsBytes.Add(p.Bytes);
             String y = " ";
             int j = 0, k = 1, z = 1, Sq = 1;
             string temp = " ";
@@ -185,11 +249,7 @@ namespace WiShark
                 
                 for (int i = 0; i < y.Length ; i++)
                 {
-                    /*if (j == 8 && Sq < (y.Length - 1))
-                        j++;
-                   /* if ()
-                    { continue; }*/
-                    if (y[i] == ' ' )//&& Sq < (y.Length - 1))
+                    if (y[i] == ' ' )
                             j++;
 
                         if (y[i] == '=')
@@ -462,8 +522,7 @@ namespace WiShark
           void addItemsToList(string No, string frameNum, string framelentgh, string capturelength, string sourceMac, string destMac, string type, string source, string dest,
               string sourcePort, string destPort, string Tim, string HeaderLength, string TimeToLive, string protocol, string Flags)
           {
-              /*if (int.Parse(No) < 2000)
-              {*/
+             
                   //add packet data to list
                   string[] tree = new string[16];
                   // add data to list
@@ -485,25 +544,7 @@ namespace WiShark
                   tree[15] = Flags;//15
 
                   trees.Add(tree);
-                  /*
-                  //add packet data to 2D array
-                  Trees[int.Parse(No), 0] = No;
-                  Trees[int.Parse(No), 1] = Tim;
-                  Trees[int.Parse(No), 2] = frameNum;
-                  Trees[int.Parse(No), 3] = framelentgh;
-                  Trees[int.Parse(No), 4] = capturelength;
-                  Trees[int.Parse(No), 5] = destMac;
-                  Trees[int.Parse(No), 6] = sourceMac;
-                  Trees[int.Parse(No), 7] = type;
-                  Trees[int.Parse(No), 8] = HeaderLength;
-                  Trees[int.Parse(No), 9] = TimeToLive;
-                  Trees[int.Parse(No), 10] = protocol;
-                  Trees[int.Parse(No), 11] = source;
-                  Trees[int.Parse(No), 12] = dest;
-                  Trees[int.Parse(No), 13] = sourcePort;
-                  Trees[int.Parse(No), 14] = destPort;
-                  Trees[int.Parse(No), 15] = Flags;*/
-              //}
+                 
             
           }
 
@@ -519,7 +560,10 @@ namespace WiShark
             button2.Enabled = true;
             button3.Enabled = true;
             button4.Enabled = true;
-            //button5.Enabled = false;
+
+            button6.Enabled = false;
+            button8.Enabled = false;
+            button9.Enabled = false;
             indexOfSelected = 0;
 
             trees.Clear();
@@ -553,13 +597,16 @@ namespace WiShark
         private void button3_Click(object sender, EventArgs e)
         {
             //stop button
-            Flag = true;
+            label5.Text = device.Statistics.ToString();
             device.StopCapture();
             device.Close();
             button2.Enabled = false;
             button3.Enabled = false;
             button1.Enabled = true;
-            //button5.Enabled = true;
+
+            button6.Enabled = true;
+            button8.Enabled = true;
+            button9.Enabled = true;
 
         }
 
@@ -570,7 +617,6 @@ namespace WiShark
             ind = 0;
             device.StopCapture();
             device.Close();
-            //button5.Enabled = false;
             indexOfSelected = 0;
 
             trees.Clear();
@@ -656,6 +702,8 @@ namespace WiShark
                     trees[indexOfSelected][6], trees[indexOfSelected][5], trees[indexOfSelected][7], trees[indexOfSelected][11], 
                     trees[indexOfSelected][12], trees[indexOfSelected][13], trees[indexOfSelected][14], trees[indexOfSelected][1], 
                    trees[indexOfSelected][8], trees[indexOfSelected][9], trees[indexOfSelected][10], trees[indexOfSelected][15]);
+
+                drawHex(indexOfSelected);
             
             }
            
@@ -704,10 +752,7 @@ namespace WiShark
                         drawTreeView(trees[i][0], trees[i][2], trees[i][3], trees[i][4], trees[i][6], trees[i][5], trees[i][7], trees[i][11],
                             trees[i][12], trees[i][13], trees[i][14], trees[i][1], trees[i][8], trees[i][9], trees[i][10], trees[i][15]);
 
-                        /*
-                        drawListView(Trees[i, 0], Trees[i, 1], Trees[i, 11], Trees[i, 12], Trees[i, 10], Trees[i, 3], packetarrayinfo[i]);
-                        drawTreeView(Trees[i, 0], Trees[i, 2], Trees[i, 3], Trees[i, 4], Trees[i, 6], Trees[i, 5], Trees[i, 7], 
-                            Trees[i, 11], Trees[i, 12], Trees[i, 13], Trees[i, 14], Trees[i, 1], Trees[i, 8], Trees[i, 9], Trees[i, 10], Trees[i, 15]);*/
+                        
                     }
                 }
             }
@@ -727,7 +772,22 @@ namespace WiShark
             Application.Exit();
         }
 
-       
+
+
+        public static string ByteArrayToString(byte[] ba)
+        {
+            string hex = BitConverter.ToString(ba);
+            return hex.Replace("-", " ");
+        }
+
+        private void drawHex(int packetIndex)
+        {
+            if (packetsBytes.Count != 0){
+                byt.SetBytes(packetsBytes[packetIndex]);
+               
+                Controls.Add(byt);
+            }
+        }
 
 
 
