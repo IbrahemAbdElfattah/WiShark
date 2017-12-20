@@ -29,8 +29,47 @@ namespace WiShark
         {
             InitializeComponent();
             button1.Enabled = false;
+
+            toolTip1.Draw += new DrawToolTipEventHandler(toolTip1_Draw);
+
+            //popup button name
+            button1.MouseHover += new EventHandler(mouseHoverResponse_button);
+            button2.MouseHover += new EventHandler(mouseHoverResponse_button);
+            
             GetDevices();
         }
+
+        private void toolTip1_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            //tool tip draw handler
+            //setting backcolor
+            e.DrawBackground();
+            e.DrawBorder();
+            e.DrawText();
+        }
+
+        private void mouseHoverResponse_button(object sender, EventArgs e)
+        {
+            //mouse over handler
+            string buttonName = "";
+
+            switch (((Control)sender).Name)
+            {
+                case "button1":
+                    buttonName = "start capture";
+                    break;
+                case "button2":
+                    buttonName = "reload the current interface list";
+                    break;
+                default:
+                    return;
+            }
+
+            toolTip1.SetToolTip((Control)sender, buttonName);
+
+
+        }
+
         //get devices funcion
         void GetDevices() {
             int i = 0;
@@ -38,6 +77,15 @@ namespace WiShark
             {
                 // Get an offline device
                Globals.devices = CaptureDeviceList.Instance;
+               foreach (ICaptureDevice dev in Globals.devices)
+               {
+                   dev.Open();
+                   checkedListBox1.Items.Add(dev.Description + " (" + dev.LinkType.ToString() + ")");
+                   dev.Close();
+
+                   i++;
+               }
+
             }
             catch (Exception error)
             {
@@ -47,13 +95,7 @@ namespace WiShark
                 return;
             }
 
-            foreach (ICaptureDevice dev in Globals.devices)
-            {
-                checkedListBox1.Items.Add(dev.Description.ToString());
-
-                i++;
-            }
-
+            
         }
 
         private int lastCheck = -1;
@@ -81,7 +123,6 @@ namespace WiShark
             
             
          }
-        bool button_flag = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -101,6 +142,13 @@ namespace WiShark
                 Form2.Globals.device.Close();
             }
             Application.Exit();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            devicesFlag = false;
+            checkedListBox1.Items.Clear();
+            GetDevices();
         }
 
         

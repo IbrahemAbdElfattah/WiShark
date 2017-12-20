@@ -73,12 +73,14 @@ namespace WiShark
 
             toolTip1.Draw += new DrawToolTipEventHandler(toolTip1_Draw);
 
+            //initializing hex viewer
             byt.Location = new Point(0, 414) ;
             byt.Size = new Size(1018,157);
             byte[] inithex = new byte[64];
             
             byt.SetBytes(inithex);
             Controls.Add(byt);
+            
             //popup button name
 
             button1.MouseHover += new EventHandler(mouseHoverResponse_button);
@@ -123,6 +125,8 @@ namespace WiShark
 
         private void toolTip1_Draw(object sender, DrawToolTipEventArgs e)
         {
+            //tool tip draw handler
+            //setting backcolor
             e.DrawBackground();
             e.DrawBorder();
             e.DrawText();
@@ -154,6 +158,7 @@ namespace WiShark
 
         private void mouseHoverResponse_button(object sender, EventArgs e)
         {
+            //mouse over handler
             string buttonName = "";
             
             switch(((Control)sender).Name)
@@ -603,8 +608,11 @@ namespace WiShark
         private void button6_Click(object sender, EventArgs e)
         {
             //back button
-            Globals.device.StopCapture();
-            Globals.device.Close();
+            if (Form1.Globals.devices.Count > 0)
+            {
+                Globals.device.StopCapture();
+                Globals.device.Close();
+            }
             
             Form1 x = new Form1();
             x.Show();
