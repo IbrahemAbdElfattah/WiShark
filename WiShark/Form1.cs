@@ -21,9 +21,10 @@ namespace WiShark
         public static class Globals
         {
             //make devices global
-            public static CaptureDeviceList devices = CaptureDeviceList.Instance;
+            public static CaptureDeviceList devices ;
             public static int index = 0;
         }
+        bool devicesFlag = false;
         public Form1()
         {
             InitializeComponent();
@@ -33,10 +34,16 @@ namespace WiShark
         //get devices funcion
         void GetDevices() {
             int i = 0;
-
-            if(Globals.devices.Count < 1)
+            try
             {
-                MessageBox.Show("No devices were found on this machine!","Error");
+                // Get an offline device
+               Globals.devices = CaptureDeviceList.Instance;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("No devices were found on this machine!\n" + error.Message, "Error");
+                checkedListBox1.Items.Add("No devices were found on this machine!");
+                devicesFlag = true;
                 return;
             }
 
@@ -74,10 +81,12 @@ namespace WiShark
             
             
          }
+        bool button_flag = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (devicesFlag == true)
+                return;
             Form2 m = new Form2();
             m.Show();
             this.Hide();
@@ -86,10 +95,16 @@ namespace WiShark
         private void button7_Click(object sender, EventArgs e)
         {
             //Close App button
-            Form2.Globals.device.StopCapture();
-            Form2.Globals.device.Close();
+            if (devicesFlag == false)
+            {
+                Form2.Globals.device.StopCapture();
+                Form2.Globals.device.Close();
+            }
             Application.Exit();
         }
+
+        
+       
 
        
         

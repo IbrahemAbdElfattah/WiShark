@@ -11,3 +11,4 @@ C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\W
 C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.csproj.GenerateResource.Cache
 C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.exe
 C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.pdb
+C:\Users\IAA\Documents\Visual Studio 2012\Projects\WiShark\WiShark\obj\Release\WiShark.csprojResolveAssemblyReference.cache
