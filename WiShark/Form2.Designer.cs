@@ -30,48 +30,48 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
-            System.Windows.Forms.TreeNode treeNode139 = new System.Windows.Forms.TreeNode("Interface id: ");
-            System.Windows.Forms.TreeNode treeNode140 = new System.Windows.Forms.TreeNode("Encapsulation type: Ethernet");
-            System.Windows.Forms.TreeNode treeNode141 = new System.Windows.Forms.TreeNode("Arrival Time: ");
-            System.Windows.Forms.TreeNode treeNode142 = new System.Windows.Forms.TreeNode("Epoch Time: ");
-            System.Windows.Forms.TreeNode treeNode143 = new System.Windows.Forms.TreeNode("Frame Number: ");
-            System.Windows.Forms.TreeNode treeNode144 = new System.Windows.Forms.TreeNode("Frame Length: ");
-            System.Windows.Forms.TreeNode treeNode145 = new System.Windows.Forms.TreeNode("Capture Length: ");
-            System.Windows.Forms.TreeNode treeNode146 = new System.Windows.Forms.TreeNode("Frame ", new System.Windows.Forms.TreeNode[] {
-            treeNode139,
-            treeNode140,
-            treeNode141,
-            treeNode142,
-            treeNode143,
-            treeNode144,
-            treeNode145});
-            System.Windows.Forms.TreeNode treeNode147 = new System.Windows.Forms.TreeNode("Destination: ");
-            System.Windows.Forms.TreeNode treeNode148 = new System.Windows.Forms.TreeNode("Source: ");
-            System.Windows.Forms.TreeNode treeNode149 = new System.Windows.Forms.TreeNode("Type: ");
-            System.Windows.Forms.TreeNode treeNode150 = new System.Windows.Forms.TreeNode("Ethernet II, Src: ", new System.Windows.Forms.TreeNode[] {
-            treeNode147,
-            treeNode148,
-            treeNode149});
-            System.Windows.Forms.TreeNode treeNode151 = new System.Windows.Forms.TreeNode("Version: ");
-            System.Windows.Forms.TreeNode treeNode152 = new System.Windows.Forms.TreeNode("Header Length: ");
-            System.Windows.Forms.TreeNode treeNode153 = new System.Windows.Forms.TreeNode("Time to live: ");
-            System.Windows.Forms.TreeNode treeNode154 = new System.Windows.Forms.TreeNode("Protocol: ");
-            System.Windows.Forms.TreeNode treeNode155 = new System.Windows.Forms.TreeNode("Source: ");
-            System.Windows.Forms.TreeNode treeNode156 = new System.Windows.Forms.TreeNode("Destination: ");
-            System.Windows.Forms.TreeNode treeNode157 = new System.Windows.Forms.TreeNode("Internet Protocol Version ", new System.Windows.Forms.TreeNode[] {
-            treeNode151,
-            treeNode152,
-            treeNode153,
-            treeNode154,
-            treeNode155,
-            treeNode156});
-            System.Windows.Forms.TreeNode treeNode158 = new System.Windows.Forms.TreeNode("Source Port: ");
-            System.Windows.Forms.TreeNode treeNode159 = new System.Windows.Forms.TreeNode("Destination Port: ");
-            System.Windows.Forms.TreeNode treeNode160 = new System.Windows.Forms.TreeNode("Flags: ");
-            System.Windows.Forms.TreeNode treeNode161 = new System.Windows.Forms.TreeNode("Transmission Control Protocol, Src Port: ", new System.Windows.Forms.TreeNode[] {
-            treeNode158,
-            treeNode159,
-            treeNode160});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Interface id: ");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Encapsulation type: Ethernet");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Arrival Time: ");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Epoch Time: ");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Frame Number: ");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Frame Length: ");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Capture Length: ");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Frame ", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Destination: ");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Source: ");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Type: ");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Ethernet II, Src: ", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Version: ");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Header Length: ");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Time to live: ");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Protocol: ");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Source: ");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Destination: ");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Internet Protocol Version ", new System.Windows.Forms.TreeNode[] {
+            treeNode13,
+            treeNode14,
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18});
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Source Port: ");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Destination Port: ");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Flags: ");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Transmission Control Protocol, Src Port: ", new System.Windows.Forms.TreeNode[] {
+            treeNode20,
+            treeNode21,
+            treeNode22});
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button9 = new System.Windows.Forms.Button();
@@ -313,57 +313,57 @@
             this.treeView1.Location = new System.Drawing.Point(0, 264);
             this.treeView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeView1.Name = "treeView1";
-            treeNode139.Name = "Interface id";
-            treeNode139.Text = "Interface id: ";
-            treeNode140.Name = "Encapsulation type";
-            treeNode140.Text = "Encapsulation type: Ethernet";
-            treeNode141.Name = "Arrival Time";
-            treeNode141.Text = "Arrival Time: ";
-            treeNode142.Name = "Epoch Time";
-            treeNode142.Text = "Epoch Time: ";
-            treeNode143.Name = "Frame Number";
-            treeNode143.Text = "Frame Number: ";
-            treeNode144.Name = "Frame Length";
-            treeNode144.Text = "Frame Length: ";
-            treeNode145.Name = "Capture Length";
-            treeNode145.Text = "Capture Length: ";
-            treeNode146.Name = "Frame";
-            treeNode146.Text = "Frame ";
-            treeNode147.Name = "Destination";
-            treeNode147.Text = "Destination: ";
-            treeNode148.Name = "Source";
-            treeNode148.Text = "Source: ";
-            treeNode149.Name = "Type";
-            treeNode149.Text = "Type: ";
-            treeNode150.Name = "Ethernet";
-            treeNode150.Text = "Ethernet II, Src: ";
-            treeNode151.Name = "Version";
-            treeNode151.Text = "Version: ";
-            treeNode152.Name = "Header Length";
-            treeNode152.Text = "Header Length: ";
-            treeNode153.Name = "Time to live";
-            treeNode153.Text = "Time to live: ";
-            treeNode154.Name = "Protocol";
-            treeNode154.Text = "Protocol: ";
-            treeNode155.Name = "Source";
-            treeNode155.Text = "Source: ";
-            treeNode156.Name = "Destination";
-            treeNode156.Text = "Destination: ";
-            treeNode157.Name = "IP";
-            treeNode157.Text = "Internet Protocol Version ";
-            treeNode158.Name = "Source Port";
-            treeNode158.Text = "Source Port: ";
-            treeNode159.Name = "Destinaton Port";
-            treeNode159.Text = "Destination Port: ";
-            treeNode160.Name = "Flags";
-            treeNode160.Text = "Flags: ";
-            treeNode161.Name = "Transmission Control Protocol";
-            treeNode161.Text = "Transmission Control Protocol, Src Port: ";
+            treeNode1.Name = "Interface id";
+            treeNode1.Text = "Interface id: ";
+            treeNode2.Name = "Encapsulation type";
+            treeNode2.Text = "Encapsulation type: Ethernet";
+            treeNode3.Name = "Arrival Time";
+            treeNode3.Text = "Arrival Time: ";
+            treeNode4.Name = "Epoch Time";
+            treeNode4.Text = "Epoch Time: ";
+            treeNode5.Name = "Frame Number";
+            treeNode5.Text = "Frame Number: ";
+            treeNode6.Name = "Frame Length";
+            treeNode6.Text = "Frame Length: ";
+            treeNode7.Name = "Capture Length";
+            treeNode7.Text = "Capture Length: ";
+            treeNode8.Name = "Frame";
+            treeNode8.Text = "Frame ";
+            treeNode9.Name = "Destination";
+            treeNode9.Text = "Destination: ";
+            treeNode10.Name = "Source";
+            treeNode10.Text = "Source: ";
+            treeNode11.Name = "Type";
+            treeNode11.Text = "Type: ";
+            treeNode12.Name = "Ethernet";
+            treeNode12.Text = "Ethernet II, Src: ";
+            treeNode13.Name = "Version";
+            treeNode13.Text = "Version: ";
+            treeNode14.Name = "Header Length";
+            treeNode14.Text = "Header Length: ";
+            treeNode15.Name = "Time to live";
+            treeNode15.Text = "Time to live: ";
+            treeNode16.Name = "Protocol";
+            treeNode16.Text = "Protocol: ";
+            treeNode17.Name = "Source";
+            treeNode17.Text = "Source: ";
+            treeNode18.Name = "Destination";
+            treeNode18.Text = "Destination: ";
+            treeNode19.Name = "IP";
+            treeNode19.Text = "Internet Protocol Version ";
+            treeNode20.Name = "Source Port";
+            treeNode20.Text = "Source Port: ";
+            treeNode21.Name = "Destinaton Port";
+            treeNode21.Text = "Destination Port: ";
+            treeNode22.Name = "Flags";
+            treeNode22.Text = "Flags: ";
+            treeNode23.Name = "Transmission Control Protocol";
+            treeNode23.Text = "Transmission Control Protocol, Src Port: ";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode146,
-            treeNode150,
-            treeNode157,
-            treeNode161});
+            treeNode8,
+            treeNode12,
+            treeNode19,
+            treeNode23});
             this.treeView1.Size = new System.Drawing.Size(1018, 154);
             this.treeView1.TabIndex = 6;
             // 
@@ -417,7 +417,7 @@
             this.MaximizeBox = false;
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WiShark";
+            this.Text = "WiShark Network Protocol Analyzer";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -146,6 +146,11 @@ namespace WiShark
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (devicesFlag == false)
+            {
+                Form2.Globals.device.StopCapture();
+                Form2.Globals.device.Close();
+            }
             devicesFlag = false;
             checkedListBox1.Items.Clear();
             GetDevices();

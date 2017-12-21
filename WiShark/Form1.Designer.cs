@@ -78,9 +78,9 @@
             // checkedListBox1
             // 
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(23, 255);
+            this.checkedListBox1.Location = new System.Drawing.Point(23, 257);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(480, 229);
+            this.checkedListBox1.Size = new System.Drawing.Size(482, 229);
             this.checkedListBox1.TabIndex = 3;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
@@ -160,7 +160,7 @@
             this.Name = "Form1";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WiShark";
+            this.Text = "WiShark Network Protocol Analyzer";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
