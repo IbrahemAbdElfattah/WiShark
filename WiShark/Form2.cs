@@ -573,15 +573,28 @@ namespace WiShark
         {
             //stop button
             label5.Text = Globals.device.Statistics.ToString();
-            Globals.device.StopCapture();
-            Globals.device.Close();
-            button2.Enabled = false;
-            button3.Enabled = false;
-            button1.Enabled = true;
+            try
+            {
+                Globals.device.StopCapture();
+                Globals.device.Close();
+                button2.Enabled = false;
+                button3.Enabled = false;
+                button1.Enabled = true;
 
-            button6.Enabled = true;
-            button8.Enabled = true;
-            button9.Enabled = true;
+                button6.Enabled = true;
+                button8.Enabled = true;
+                button9.Enabled = true;
+            }
+            catch (Exception er) {
+                MessageBox.Show(er.Message);
+                button2.Enabled = false;
+                button3.Enabled = false;
+                button1.Enabled = true;
+
+                button6.Enabled = true;
+                button8.Enabled = true;
+                button9.Enabled = true;
+            }
 
         }
 
@@ -590,33 +603,67 @@ namespace WiShark
             //restart button
             listView1.Items.Clear();
             ind = 0;
-            Globals.device.StopCapture();
-            Globals.device.Close();
-            indexOfSelected = 0;
+            try
+            {
+                Globals.device.StopCapture();
+                Globals.device.Close();
+                indexOfSelected = 0;
 
-            trees.Clear();
+                trees.Clear();
 
-            button6.Enabled = false;
-            button8.Enabled = false;
-            button9.Enabled = false;
+                button6.Enabled = false;
+                button8.Enabled = false;
+                button9.Enabled = false;
 
-            initialvalues();
-        
-            getPackets();
+                initialvalues();
+
+                getPackets();
+            }
+            catch (Exception er) {
+                MessageBox.Show(er.Message);
+                indexOfSelected = 0;
+
+                trees.Clear();
+
+                button6.Enabled = false;
+                button8.Enabled = false;
+                button9.Enabled = false;
+
+                initialvalues();
+
+                getPackets();
+            
+            }
+            
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             //back button
-            if (Form1.Globals.devices.Count > 0)
+            try
             {
-                Globals.device.StopCapture();
-                Globals.device.Close();
+
+                if (Form1.Globals.devices.Count > 0)
+                {
+                    Globals.device.StopCapture();
+                    Globals.device.Close();
+
+                    Form1 x = new Form1();
+                    x.Show();
+                    this.Hide();
+        
+                }
+            }catch (Exception er) {
+                MessageBox.Show(er.Message);
+
+                Form1 x = new Form1();
+                x.Show();
+                this.Hide();
+        
+                
             }
             
-            Form1 x = new Form1();
-            x.Show();
-            this.Hide();
+           
         }
 
      
@@ -707,9 +754,17 @@ namespace WiShark
         private void button7_Click(object sender, EventArgs e)
         {
             //Close App button
-            Globals.device.StopCapture();
-            Globals.device.Close();
-            Application.Exit();
+            try
+            {
+                Globals.device.StopCapture();
+                Globals.device.Close();
+                Application.Exit();
+            }
+            catch (Exception er) {
+                MessageBox.Show(er.Message);
+                Application.Exit();
+
+            }
         }
 
 

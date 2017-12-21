@@ -85,6 +85,7 @@ namespace WiShark
 
                    i++;
                }
+               devicesFlag = false;
 
             }
             catch (Exception error)
@@ -136,24 +137,42 @@ namespace WiShark
         private void button7_Click(object sender, EventArgs e)
         {
             //Close App button
-            if (devicesFlag == false)
+            try
             {
-                Form2.Globals.device.StopCapture();
-                Form2.Globals.device.Close();
+                if (devicesFlag == false)
+                {
+                    Form2.Globals.device.StopCapture();
+                    Form2.Globals.device.Close();
+                }
+                Application.Exit();
             }
-            Application.Exit();
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message);
+                Application.Exit();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (devicesFlag == false)
+            try
             {
-                Form2.Globals.device.StopCapture();
-                Form2.Globals.device.Close();
+                if (devicesFlag == false)
+                {
+                    Form2.Globals.device.StopCapture();
+                    Form2.Globals.device.Close();
+                }
+
+                devicesFlag = false;
+                checkedListBox1.Items.Clear();
+                GetDevices();
             }
-            devicesFlag = false;
-            checkedListBox1.Items.Clear();
-            GetDevices();
+            catch (Exception er) {
+                MessageBox.Show(er.Message);
+                devicesFlag = false;
+                checkedListBox1.Items.Clear();
+                GetDevices();
+            }
         }
 
         
