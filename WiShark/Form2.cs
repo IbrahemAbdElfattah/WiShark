@@ -58,6 +58,8 @@ namespace WiShark
         SaveFileDialog saveFile = new SaveFileDialog();
         OpenFileDialog openFile = new OpenFileDialog();
         bool openfileFlag = false;
+        bool done = false;
+
         string Filt = "";
         int ind = 0;
        
@@ -133,19 +135,37 @@ namespace WiShark
         }
         void getPackets()
         {
-
             // Register our handler function to the 'packet arrival' event
             Globals.device.OnPacketArrival +=
                 new PacketArrivalEventHandler(device_OnPacketArrival);
 
-            // Open the device for capturing
-            int readTimeoutMilliseconds = 1000;
+            
             if (openfileFlag == true)
             {
                 Globals.device.Open();
             }
             else
             {
+                if (done == true)
+                {
+                    try
+                    {
+                        Globals.device.Close();
+                        done = false;
+                    }
+                    catch (Exception er)
+                    {
+                        MessageBox.Show(er.Message, "ERROR");
+                    }
+
+                }
+                Globals.device = Form1.Globals.devices[Form1.Globals.index];
+                // Register our handler function to the 'packet arrival' event
+                Globals.device.OnPacketArrival +=
+                    new PacketArrivalEventHandler(device_OnPacketArrival);
+
+                // Open the device for capturing
+                int readTimeoutMilliseconds = 1000;
                 Globals.device.Open(DeviceMode.Promiscuous, readTimeoutMilliseconds);
             }
             // Start the capturing process
@@ -430,89 +450,93 @@ namespace WiShark
 
         void drawListView(string No, string Tim, string source, string dest, string protocol, string Len, string info)
         {
-            // adding data to list view
-            if (Filt != "")
+            listView1.Invoke((MethodInvoker)delegate
             {
-                ListViewItem packetitem = new ListViewItem(No);
-                packetitem.SubItems.Add(Tim);
-                packetitem.SubItems.Add(source);
-                packetitem.SubItems.Add(dest);
-                packetitem.SubItems.Add(protocol);
-                packetitem.SubItems.Add(Len);
-                packetitem.SubItems.Add(info);
+                // adding data to list view
+                if (Filt != "")
+                {
+                    ListViewItem packetitem = new ListViewItem(No);
+                    packetitem.SubItems.Add(Tim);
+                    packetitem.SubItems.Add(source);
+                    packetitem.SubItems.Add(dest);
+                    packetitem.SubItems.Add(protocol);
+                    packetitem.SubItems.Add(Len);
+                    packetitem.SubItems.Add(info);
 
-                listView1.Items.Add(packetitem);
-            }
-            else
-            {
-                ListViewItem packetitem = new ListViewItem(No);
-                packetitem.SubItems.Add(Tim);
-                packetitem.SubItems.Add(source);
-                packetitem.SubItems.Add(dest);
-                packetitem.SubItems.Add(protocol);
-                packetitem.SubItems.Add(Len);
-                packetitem.SubItems.Add(info);
+                    listView1.Items.Add(packetitem);
+                }
+                else
+                {
+                    ListViewItem packetitem = new ListViewItem(No);
+                    packetitem.SubItems.Add(Tim);
+                    packetitem.SubItems.Add(source);
+                    packetitem.SubItems.Add(dest);
+                    packetitem.SubItems.Add(protocol);
+                    packetitem.SubItems.Add(Len);
+                    packetitem.SubItems.Add(info);
 
-                listView1.Items.Add(packetitem);
-            }
+                    listView1.Items.Add(packetitem);
+                }
 
-
+            });
         }
 
         void drawTreeView(string No, string frameNum, string framelentgh, string capturelength, string sourceMac, string destMac, string type, string source, string dest,
             string sourcePort, string destPort, string Tim, string HeaderLength, string TimeToLive, string protocol, string Flags)
         {
-            
-            // add data of packet to treeview
-            //add data of roots
-            treeView1.Nodes[0].Text += (No + ": " + framelentgh + " bytes on wire (" + (int.Parse(framelentgh) * 8).ToString() + 
-                " bits), " + framelentgh + " bytes captured (" + (int.Parse(framelentgh) * 8).ToString() + " bits) on interface " + Form1.Globals.index.ToString());
-            treeView1.Nodes[1].Text += (sourceMac + ", Dst: " + destMac);
-            treeView1.Nodes[2].Text += (type[(type.Length - 1)].ToString() + ", Src: " + source + ", Dst: " + dest);
-            if (protocol == "UDP")
-            { treeView1.Nodes[3].Text = ("User Datagram Protocol, Src Port: " + sourcePort + ", Dst Port: " + destPort); }
-            else if (protocol == "IGMP")
-            { treeView1.Nodes[3].Text = "Internet Group Management Protocol"; }
-            else if (protocol == "ICMPV6")
-            { treeView1.Nodes[3].Text = "Internet Control Message Protocol v6"; }
-            else { treeView1.Nodes[3].Text += (sourcePort + ", Dst Port: " + destPort); }
-            //add data to nades of root 0 (frame)
-            treeView1.Nodes[0].Nodes[0].Text += (Form1.Globals.index.ToString() + " " + Form1.Globals.devices[Form1.Globals.index].Name.ToString());
-            treeView1.Nodes[0].Nodes[2].Text += Tim;
-            treeView1.Nodes[0].Nodes[4].Text += frameNum;
-            treeView1.Nodes[0].Nodes[5].Text += framelentgh + " bytes";
-            treeView1.Nodes[0].Nodes[6].Text += capturelength + " bytes";
-            //add data to nades of root 1 (ethernet)
-            treeView1.Nodes[1].Nodes[1].Text += sourceMac;
-            treeView1.Nodes[1].Nodes[0].Text += destMac;
-            treeView1.Nodes[1].Nodes[2].Text += type;
-            //add data to nades of root 2 (IP)
-            treeView1.Nodes[2].Nodes[0].Text += type[(type.Length - 1)];
-            treeView1.Nodes[2].Nodes[1].Text += HeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text += TimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text += protocol;
-            treeView1.Nodes[2].Nodes[4].Text += source;
-            treeView1.Nodes[2].Nodes[5].Text += dest;
-            //add data to nades of root 3 (Transmission)
-            if (protocol == "IGMP")
+            treeView1.Invoke((MethodInvoker)delegate
             {
-                treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
-                treeView1.Nodes[3].Nodes[1].Text = "Max Resp Time: " + destPort;
-                treeView1.Nodes[3].Nodes[2].Text = "Multicast Address: " + Flags;
-            }
-            else if (protocol == "ICMPV6")
-            {
-                treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
-                treeView1.Nodes[3].Nodes[1].Text =  "Code: 0" + destPort;
-                treeView1.Nodes[3].Nodes[2].Text += Flags;
-            }
-                
-            else
-            {
-                treeView1.Nodes[3].Nodes[0].Text += sourcePort;
-                treeView1.Nodes[3].Nodes[1].Text += destPort;
-                treeView1.Nodes[3].Nodes[2].Text += Flags;
-            }
+                // add data of packet to treeview
+                //add data of roots
+                treeView1.Nodes[0].Text += (No + ": " + framelentgh + " bytes on wire (" + (int.Parse(framelentgh) * 8).ToString() +
+                    " bits), " + framelentgh + " bytes captured (" + (int.Parse(framelentgh) * 8).ToString() + " bits) on interface " + Form1.Globals.index.ToString());
+                treeView1.Nodes[1].Text += (sourceMac + ", Dst: " + destMac);
+                treeView1.Nodes[2].Text += (type[(type.Length - 1)].ToString() + ", Src: " + source + ", Dst: " + dest);
+                if (protocol == "UDP")
+                { treeView1.Nodes[3].Text = ("User Datagram Protocol, Src Port: " + sourcePort + ", Dst Port: " + destPort); }
+                else if (protocol == "IGMP")
+                { treeView1.Nodes[3].Text = "Internet Group Management Protocol"; }
+                else if (protocol == "ICMPV6")
+                { treeView1.Nodes[3].Text = "Internet Control Message Protocol v6"; }
+                else { treeView1.Nodes[3].Text += (sourcePort + ", Dst Port: " + destPort); }
+                //add data to nades of root 0 (frame)
+                treeView1.Nodes[0].Nodes[0].Text += (Form1.Globals.index.ToString() + " " + Form1.Globals.devices[Form1.Globals.index].Name.ToString());
+                treeView1.Nodes[0].Nodes[2].Text += Tim;
+                treeView1.Nodes[0].Nodes[4].Text += frameNum;
+                treeView1.Nodes[0].Nodes[5].Text += framelentgh + " bytes";
+                treeView1.Nodes[0].Nodes[6].Text += capturelength + " bytes";
+                //add data to nades of root 1 (ethernet)
+                treeView1.Nodes[1].Nodes[1].Text += sourceMac;
+                treeView1.Nodes[1].Nodes[0].Text += destMac;
+                treeView1.Nodes[1].Nodes[2].Text += type;
+                //add data to nades of root 2 (IP)
+                treeView1.Nodes[2].Nodes[0].Text += type[(type.Length - 1)];
+                treeView1.Nodes[2].Nodes[1].Text += HeaderLength;
+                treeView1.Nodes[2].Nodes[2].Text += TimeToLive;
+                treeView1.Nodes[2].Nodes[3].Text += protocol;
+                treeView1.Nodes[2].Nodes[4].Text += source;
+                treeView1.Nodes[2].Nodes[5].Text += dest;
+                //add data to nades of root 3 (Transmission)
+                if (protocol == "IGMP")
+                {
+                    treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
+                    treeView1.Nodes[3].Nodes[1].Text = "Max Resp Time: " + destPort;
+                    treeView1.Nodes[3].Nodes[2].Text = "Multicast Address: " + Flags;
+                }
+                else if (protocol == "ICMPV6")
+                {
+                    treeView1.Nodes[3].Nodes[0].Text = "Type: " + sourcePort;
+                    treeView1.Nodes[3].Nodes[1].Text = "Code: 0" + destPort;
+                    treeView1.Nodes[3].Nodes[2].Text += Flags;
+                }
+
+                else
+                {
+                    treeView1.Nodes[3].Nodes[0].Text += sourcePort;
+                    treeView1.Nodes[3].Nodes[1].Text += destPort;
+                    treeView1.Nodes[3].Nodes[2].Text += Flags;
+                }
+            });
         }
 
           void addItemsToList(string No, string frameNum, string framelentgh, string capturelength, string sourceMac, string destMac, string type, string source, string dest,
@@ -572,7 +596,8 @@ namespace WiShark
         private void button3_Click(object sender, EventArgs e)
         {
             //stop button
-            label5.Text = Globals.device.Statistics.ToString();
+            if (done != true)
+                label5.Text = Globals.device.Statistics.ToString();
             try
             {
                 Globals.device.StopCapture();
@@ -808,10 +833,11 @@ namespace WiShark
 
         private void button9_Click(object sender, EventArgs e)
         {
-           
+            //open file button
+            
             button1.Enabled = true;
             button2.Enabled = false;
-            button3.Enabled = false;
+            button3.Enabled = true;
             button6.Enabled = true;
             if (packets.Count == 0)
                 button8.Enabled = false;
@@ -828,50 +854,55 @@ namespace WiShark
                 initialvalues();
                 packets.Clear();
                 openfileFlag = true;
-            
                 try
                 {
                     // Get an offline device
                     Globals.device = new CaptureFileReaderDevice(openFileDialog1.FileName);
                     getPackets();
+                    
+                    done = true;
                 }
                 catch (Exception error)
                 {
                     MessageBox.Show(("Caught exception when opening file \n" + error.ToString()), "Error");
                     return;
                 }
-
+                
 
 
             }
+            
             openfileFlag = false;
         }
 
 
         void initialvalues()
         {
-            //retrieve initial state of treeView
-            treeView1.Nodes[0].Text = bframe;
-            treeView1.Nodes[1].Text = bethernet;
-            treeView1.Nodes[2].Text = bip;
-            treeView1.Nodes[3].Text = bTransmission;
-            treeView1.Nodes[0].Nodes[0].Text = binterface;
-            treeView1.Nodes[0].Nodes[2].Text = bTim;
-            treeView1.Nodes[0].Nodes[4].Text = bframeNum;
-            treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
-            treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
-            treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
-            treeView1.Nodes[1].Nodes[0].Text = bdestMac;
-            treeView1.Nodes[1].Nodes[2].Text = btype;
-            treeView1.Nodes[2].Nodes[0].Text = bversion;
-            treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
-            treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
-            treeView1.Nodes[2].Nodes[3].Text = bprotocol;
-            treeView1.Nodes[2].Nodes[4].Text = bsource;
-            treeView1.Nodes[2].Nodes[5].Text = bdest;
-            treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
-            treeView1.Nodes[3].Nodes[1].Text = bdestPort;
-            treeView1.Nodes[3].Nodes[2].Text = bFlags;
+            listView1.Invoke((MethodInvoker)delegate
+            {
+                //retrieve initial state of treeView
+                treeView1.Nodes[0].Text = bframe;
+                treeView1.Nodes[1].Text = bethernet;
+                treeView1.Nodes[2].Text = bip;
+                treeView1.Nodes[3].Text = bTransmission;
+                treeView1.Nodes[0].Nodes[0].Text = binterface;
+                treeView1.Nodes[0].Nodes[2].Text = bTim;
+                treeView1.Nodes[0].Nodes[4].Text = bframeNum;
+                treeView1.Nodes[0].Nodes[5].Text = bframelentgh;
+                treeView1.Nodes[0].Nodes[6].Text = bcapturelength;
+                treeView1.Nodes[1].Nodes[1].Text = bsourceMac;
+                treeView1.Nodes[1].Nodes[0].Text = bdestMac;
+                treeView1.Nodes[1].Nodes[2].Text = btype;
+                treeView1.Nodes[2].Nodes[0].Text = bversion;
+                treeView1.Nodes[2].Nodes[1].Text = bHeaderLength;
+                treeView1.Nodes[2].Nodes[2].Text = bTimeToLive;
+                treeView1.Nodes[2].Nodes[3].Text = bprotocol;
+                treeView1.Nodes[2].Nodes[4].Text = bsource;
+                treeView1.Nodes[2].Nodes[5].Text = bdest;
+                treeView1.Nodes[3].Nodes[0].Text = bsourcePort;
+                treeView1.Nodes[3].Nodes[1].Text = bdestPort;
+                treeView1.Nodes[3].Nodes[2].Text = bFlags;
+            });
         }
 
 
