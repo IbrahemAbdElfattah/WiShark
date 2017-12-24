@@ -486,6 +486,7 @@ namespace WiShark
         {
             treeView1.Invoke((MethodInvoker)delegate
             {
+                initialvalues();
                 // add data of packet to treeview
                 //add data of roots
                 treeView1.Nodes[0].Text += (No + ": " + framelentgh + " bytes on wire (" + (int.Parse(framelentgh) * 8).ToString() +
@@ -587,7 +588,6 @@ namespace WiShark
             indexOfSelected = 0;
 
             trees.Clear();
-            initialvalues();
         
         }
 
@@ -640,7 +640,6 @@ namespace WiShark
                 button8.Enabled = false;
                 button9.Enabled = false;
 
-                initialvalues();
 
                 getPackets();
             }
@@ -654,7 +653,6 @@ namespace WiShark
                 button8.Enabled = false;
                 button9.Enabled = false;
 
-                initialvalues();
 
                 getPackets();
             
@@ -697,7 +695,6 @@ namespace WiShark
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            initialvalues();
         
 
             //get index of selected item
@@ -851,7 +848,6 @@ namespace WiShark
                 ind = 0;
                 indexOfSelected = 0;
                 trees.Clear();
-                initialvalues();
                 packets.Clear();
                 openfileFlag = true;
                 try
